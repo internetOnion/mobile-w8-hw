@@ -17,7 +17,7 @@ class _TemperatureAppState extends State<TemperatureApp> {
   AppScreen _currScreen = AppScreen.welcome;
 
   Widget get _screen => switch (_currScreen) {
-    AppScreen.temperature =>  TemperatureScreen(),
+    AppScreen.temperature => TemperatureScreen(),
     AppScreen.welcome => WelcomeScreen(onStart: start),
   };
 
