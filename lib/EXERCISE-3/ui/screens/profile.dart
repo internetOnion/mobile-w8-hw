@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_w8_practice/EXERCISE-3/model/profile_tile_model.dart';
 
 import '../theme/theme.dart';
 
 class ProfileApp extends StatelessWidget {
-  const ProfileApp({super.key});
+  final ProfileData profileData;
+
+  const ProfileApp(this.profileData, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,36 +27,24 @@ class ProfileApp extends StatelessWidget {
             const SizedBox(height: 40),
             const CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage(
-                  'assets/images/w8/aang.png'), 
+              backgroundImage: AssetImage('assets/images/w8/aang.png'),
             ),
             const SizedBox(height: 20),
             Text(
-              'Ronan OGOR',
+              profileData.name,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: AppColors.primary,
               ),
             ),
-            const Text(
-              'Flutter Developer',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
+            Text(
+              profileData.position,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 20),
-            const ProfileTile(
-              icon: Icons.phone,
-              title: "Phone Number",
-              data: "+123 456 7890",
-            ),
-             const ProfileTile(
-              icon: Icons.location_on,
-              title: "Address",
-              data: "Cambodia",
-            ),
+            for (var tile in profileData.tiles)
+              ProfileTile(icon: tile.icon, title: tile.title, data: tile.value),
           ],
         ),
       ),
