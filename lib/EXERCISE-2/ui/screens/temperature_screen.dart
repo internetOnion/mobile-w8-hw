@@ -1,7 +1,33 @@
 import 'package:flutter/material.dart';
 
-class TemperatureScreen extends StatelessWidget {
-  TemperatureScreen({super.key});
+class TemperatureScreen extends StatefulWidget {
+
+  const TemperatureScreen({super.key});
+
+  @override
+  State<TemperatureScreen> createState() => _TemperatureScreenState();
+}
+
+class _TemperatureScreenState extends State<TemperatureScreen> {
+  final TextEditingController _degreeController = TextEditingController();
+  final FocusNode _degreeFocusNode = FocusNode();
+  String _f = '';
+  
+  @override
+  void initState() {
+    super.initState();
+    _degreeFocusNode.addListener(_onFocusChange);
+  }
+
+  void _onFocusChange() {
+    if (!_degreeFocusNode.hasFocus) {
+      final c = double.tryParse(_degreeController.text);
+      setState(() {
+        _f = c == null ? '' : (c * 9 / 5 + 32).toStringAsFixed(1);
+      });
+    }
+  }
+
 
   final InputDecoration inputDecoration = InputDecoration(
     enabledBorder: OutlineInputBorder(
@@ -36,7 +62,10 @@ class TemperatureScreen extends StatelessWidget {
             const Text("Temperature in Degrees:"),
             const SizedBox(height: 10),
             TextField(
+              controller: _degreeController,
               decoration: inputDecoration,
+              focusNode: _degreeFocusNode,
+              keyboardType: TextInputType.number,
               style: const TextStyle(color: Colors.white),
             ),
             const SizedBox(height: 30),
@@ -48,7 +77,7 @@ class TemperatureScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Text('test'),
+              child: Text(_f),
             ),
           ],
         ),

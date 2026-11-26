@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_w8_practice/EXERCISE-4/main.dart';
 import 'package:mobile_w8_practice/EXERCISE-4/models/joke_data.dart';
 import 'package:mobile_w8_practice/EXERCISE-4/widgets/joke.dart';
 
-class FavoriteCard extends StatefulWidget {
-  final JokeData jokeData;
+class FavoriteCard extends StatelessWidget {
+  final JokeData _jokeData;
+  final bool _isFavorite;
+  final VoidCallback _onFavoriteTap;
 
-  const FavoriteCard({super.key, required this.jokeData});
-
-  @override
-  State<FavoriteCard> createState() => _FavoriteCardState();
-}
-
-class _FavoriteCardState extends State<FavoriteCard> {
-  bool _isFavorite = false;
-
-  void onFavoriteClick() {
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
-  }
+  const FavoriteCard({super.key, required this._jokeData, required this._isFavorite, required this._onFavoriteTap});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +19,9 @@ class _FavoriteCardState extends State<FavoriteCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Expanded(flex: 7, child: Joke(jokeData: widget.jokeData)),
+          Expanded(flex: 7, child: Joke(jokeData: _jokeData)),
           IconButton(
-            onPressed: onFavoriteClick,
+            onPressed: _onFavoriteTap,
             icon: Icon(
               _isFavorite ? Icons.favorite : Icons.favorite_border,
               color: _isFavorite ? Colors.red : Colors.grey,
